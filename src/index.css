@@ -4,6 +4,7 @@
 
 :root {
 	--dark: #111;
+	--orange: #ff7d0a;
 }
 
 body {
@@ -31,7 +32,7 @@ code {
 	height: 60px;
 	display: flex;
 	align-items: center;
-	z-index: 1;
+	z-index: 10;
 }
 
 .page-logo {
@@ -53,6 +54,10 @@ code {
 .main-content {
 	width: 80%;
 	background-color: #eee;
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
 }
 
 .search-form {
@@ -109,12 +114,17 @@ code {
 	border-bottom: 2px solid #fff;
 }
 
+.search-form input.filled ~ label {
+	transform: translateY(-40px);
+}
+
 .search-form input:focus ~ label {
 	transform: translateY(-40px);
 	font-size: 12px;
 }
 
-.search-form select:focus {
+.search-form select:focus,
+.search-form select.filled {
 	color: #fff;
 }
 
@@ -130,4 +140,99 @@ code {
 .search-form .submit-btn:hover {
 	color: #fff;
 	background-color: #222;
+}
+
+.movie-box {
+	width: 33.33%;
+	padding: 15px;
+}
+
+.movie-wrapper {
+	padding: 8px;
+	background-color: var(--orange);
+	color: #fff;
+	border-radius: 8px;
+	box-shadow: 2px 2px 5px rgba(25,25,25,.4);
+}
+
+.movie-photo {
+	position: relative;
+	margin: 0;
+	height: 500px;
+	overflow: hidden;
+}
+
+.movie-photo::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background-color: rgba(0,0,0,0);
+}
+
+.movie-photo:hover::before {
+	background-color: rgba(0,0,0,0.5);
+}
+
+.movie-photo img {
+	width: 100%;
+	height: 500px;
+	transition: transform 0.4s;
+}
+
+.movie-photo:hover img {
+	transform: scale(1.2, 1.2);
+} 
+
+.movie-title {
+	margin: 10px 0 5px;
+	font-size: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.movie-release {
+	margin: 5px 0;
+	font-size: 14px;
+}
+
+.loading-spinner {
+	position: relative;
+	min-height: 50px;
+	width: 100%;
+	margin-top: 30px;
+}
+
+.loading-spinner::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 50px;
+	height: 50px;
+	border: 4px solid rgba(63,81,181,0.3);
+	border-top: 4px solid #3f51b5;
+	border-radius: 50%;
+	animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
+}
+
+.error-message {
+	width: 100%;
+	height: 30px;
+	font-size: 22px;
+	line-height: 30px;
+	text-align: center;
 }
