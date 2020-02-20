@@ -14,6 +14,7 @@ const MoviesList = ({ movies, isFetching, error }) => {
 			{movies.map(movie => 
 				<MovieItem key={movie.imdbID} movie={movie} />
 			)}
+			{isFetching && <LoadingSpinner />}
 			{error && <ErrorInfo error={error} />}
 		</>
 	);
