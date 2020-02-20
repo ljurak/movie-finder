@@ -24,12 +24,21 @@ class SearchForm extends React.Component {
 			return;
 		}
 
-		const { fetchMoviesRequest, fetchMoviesSuccess, fetchMoviesError } = this.props; 
+		const { fetchMoviesRequest, fetchMoviesSuccess, fetchMoviesError, setPage, setPageUrl } = this.props; 
 
 		fetchMoviesRequest();
-		MoviesApi.fetchMovies(title, year, type)
-			.then(resp => resp.json())
-			.then(movies => movies.Error ? Promise.reject(movies.Error) : fetchMoviesSuccess(movies.Search))
+		MoviesApi.searchMovies(title, year, type)
+			.then(resp => {
+				setPageUrl(resp.url);
+				return resp.json();
+			})
+			.then(movies => {
+				if (movies.Error) {
+					return Promise.reject(movies.Error);
+				}
+				fetchMoviesSuccess(movies.Search, true);
+				setPage(1);
+			})
 			.catch(error => fetchMoviesError(error));
 	}
 
