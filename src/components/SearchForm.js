@@ -26,6 +26,7 @@ class SearchForm extends React.Component {
 
 		const { fetchMoviesRequest, fetchMoviesSuccess, fetchMoviesError, setPage, setPageUrl } = this.props; 
 
+		setPage(0);
 		fetchMoviesRequest();
 		MoviesApi.searchMovies(title, year, type)
 			.then(resp => {
