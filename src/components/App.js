@@ -46,7 +46,12 @@ class App extends React.Component {
 	}
 
 	fetchMoviesError = (error) => {
-		this.setState({ isFetching: false, error, hasMore: false });
+		this.setState(state => ({
+			movies: state.page ? state.movies : [], 
+			isFetching: false, 
+			error, 
+			hasMore: false 
+		}));
 	}
 
 	setPage = (page) => {
