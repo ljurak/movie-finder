@@ -18,6 +18,27 @@ class App extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		this.fetchMoviesAfterStart();
+	}
+
+	fetchMoviesAfterStart = () => {
+		this.fetchMoviesRequest();
+		MoviesApi.searchMovies('movie')
+			.then(resp => {
+				this.setPageUrl(resp.url);
+				return resp.json();
+			})
+			.then(movies => {
+				if (movies.Error) {
+					return Promise.reject(movies.Error);
+				}
+				this.fetchMoviesSuccess(movies.Search, true);
+				this.setPage(1);
+			})
+			.catch(error => this.fetchMoviesError(error));
+	}
+
 	fetchMovies = (url, page) => {
 		this.fetchMoviesRequest();
 		MoviesApi.fetchNextPage(url, page)
